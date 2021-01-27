@@ -1,0 +1,14 @@
+﻿@inherits ComponentBase
+
+<span>
+    @UnboundChildContent(RefBack)
+</span>
+
+@code {
+    [Parameter] public RenderFragment<ForwardRef> UnboundChildContent { get; set; }
+
+    [Parameter] public ForwardRef RefBack { get; set; } = new ForwardRef();
+
+    [Parameter] public string Title { get; set; }
+
+} 

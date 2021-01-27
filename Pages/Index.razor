@@ -1,0 +1,33 @@
+﻿@page "/"
+
+<CardDeck Actions="@actions" />
+
+@code {
+    //compiler error CS0103: The name 'context' does not exist in the current context
+    /*
+    private readonly RenderFragment tooltipFormTemplateBad =
+        @<Tooltip>
+            <UnboundChildContent>                
+                <span class="oi oi-arrow-bottom" ref="@context.Current"></span>
+            </UnboundChildContent>
+        </Tooltip>;
+    */
+
+    private static RenderFragment<string> tooltipFormTemplate => (icon) => __builder =>
+    {
+        __builder.OpenComponent<BlazorApp.Pages.Tooltip>(0);
+        __builder.AddAttribute(1, "Title",
+            Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<System.String>("Tooltip title"));
+        __builder.AddAttribute(2, "UnboundChildContent", (RenderFragment<ForwardRef>)((context) =>
+            @<span class="@icon" ref="@context.Current"></span>
+        ));
+        __builder.CloseComponent();
+    };
+
+    private static readonly IList<RenderFragment> actions = new List<RenderFragment>
+    {
+        tooltipFormTemplate("oi oi-arrow-bottom"),
+        tooltipFormTemplate("oi oi-align-left"),
+        tooltipFormTemplate("oi-zoom-out")
+    };
+}

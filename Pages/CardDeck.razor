@@ -1,0 +1,45 @@
+﻿<div class="container">
+    <div class="row">
+        @foreach (var item in data)
+        {
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <div class="card-block">
+                        <h4 class="card-title">@item.Title</h4>
+                        <p class="card-text">@item.Content</p>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="nav">
+                            @foreach (var action in Actions)
+                            {
+                                <li class="nav-item" style="@($"width:{100 / Actions.Count}%") ">
+                                    <span class="nav-link">@action</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public IList<RenderFragment> Actions { get; set; }
+
+    class CardData
+    {
+        public string Title { get; set; }
+
+        public string Content { get; set; }
+
+    }
+
+    CardData[] data = Enumerable.Range(0, 150).Select(i => new CardData()
+    {
+        Title = $"Card No. {i}",
+        Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    }).ToArray();
+
+}
